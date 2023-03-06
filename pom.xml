@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+
+  <groupId>com.ark.common</groupId>
+  <artifactId>ark-common-httpclient</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <java_source_version>1.8</java_source_version>
+    <java_target_version>1.8</java_target_version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <profiles.dir>src/main/profiles</profiles.dir>
+    <httpclient.version>4.5.13</httpclient.version>
+    <httpmime.version>4.5.13</httpmime.version>
+    <httpcache.version>4.5.13</httpcache.version>
+    <guava.version>18.0</guava.version>
+    <org.slf4j.version>1.7.7</org.slf4j.version>
+    <logback.version>1.0.13</logback.version>
+    <org.quartz-scheduler.version>2.1.7</org.quartz-scheduler.version>
+    <org.codehaus.jackson.version>1.9.13</org.codehaus.jackson.version>
+    <com.fasterxml.jackson.version>2.4.2</com.fasterxml.jackson.version>
+    <commons-lang3.version>3.1</commons-lang3.version>
+
+    <!-- for maven compiler plugin -->
+    <maven_compiler_plugin_version>3.1</maven_compiler_plugin_version>
+    <java_source_version>1.8</java_source_version>
+    <java_target_version>1.8</java_target_version>
+    <file_encoding>UTF-8</file_encoding>
+
+    <maven_source_plugin_version>2.2.1</maven_source_plugin_version>
+    <maven_jar_plugin_version>2.4</maven_jar_plugin_version>
+    <maven_war_plugin_version>2.3</maven_war_plugin_version>
+    <maven_install_plugin_version>2.3.1</maven_install_plugin_version>
+    <maven_deploy_plugin_version>2.7</maven_deploy_plugin_version>
+    <maven-enforcer-plugin_version>1.2</maven-enforcer-plugin_version>
+
+    <enforcer-custom-rules_version>1.1.0</enforcer-custom-rules_version>
+    <extra-enforcer-rules_version>1.0-alpha-5</extra-enforcer-rules_version>
+
+    <maven_deploy_skip>false</maven_deploy_skip>
+  </properties>
+
+  <dependencies>
+    <!-- httpclient依赖包-->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${httpclient.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
+      <version>${httpmime.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient-cache</artifactId>
+      <version>${httpcache.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- httpclient依赖包-->
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.16</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+      <version>1.9</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.1</version>
+    </dependency>
+
+    <!-- logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!--Apache log4j redirect to slf4j -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+    <!--将所有日志归一成 logback -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>http</finalName>
+    <resources>
+      <resource>
+        <directory>${profiles.dir}/${deploy.type}</directory>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven-enforcer-plugin_version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>extra-enforcer-rules</artifactId>
+            <version>${extra-enforcer-rules_version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven_jar_plugin_version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>${maven_install_plugin_version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${maven_deploy_plugin_version}</version>
+        <configuration>
+          <skip>${maven_deploy_skip}</skip>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven_compiler_plugin_version}</version>
+        <configuration>
+          <source>${java_source_version}</source>
+          <target>${java_target_version}</target>
+          <encoding>${file_encoding}</encoding>
+          <debug>true</debug>
+          <fork>true</fork>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven_source_plugin_version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <attach>true</attach>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
