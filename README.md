@@ -8,12 +8,13 @@
 # 4.功能列表
 ```
 （1）http连接池可配置化
-（2）提供标准的rest风格接口服务
+（2）支持全链路id、压测、灰度、永道等标识传递
+（3）提供标准的rest风格接口服务
         a.get请求：请求服务器获取指定资源，查询/获取数据操作
         b.post请求：请求服务器向指定资源提交数据，修改/更新/插入操作
         c.put请求：请求服务器存储资源，新增/插入操作
         d.delete请求：请求服务器删除指定资源
-（3）提供的http方法get/post
+（4）提供的http方法get/post
          例如：
           HttpClientUtil.reqGet(String url)
          HttpClientUtil.reqPost(String url,Map<String,Object> param)
